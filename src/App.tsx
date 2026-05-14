@@ -12,7 +12,6 @@ const ImmersiveDNA = () => {
       {[...Array(points)].map((_, i) => {
         const angle = (i / points) * Math.PI * 4;
         const x = Math.sin(angle) * 150;
-        const z = Math.cos(angle) * 150;
         return (
           <motion.div
             key={i}
@@ -130,9 +129,6 @@ function App() {
             
             <div className="hero-subtitle">
               {personalInfo.role}
-              <p className="mt-4 text-lg text-slate-400 font-normal">
-                浙江省肿瘤医院 / 中国科学院杭州医学研究所
-              </p>
             </div>
           </motion.div>
 
@@ -276,11 +272,11 @@ function App() {
           
           <div className="contact-btn-group">
             <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.github} className="fancy-btn">
-              <Github size={24} />
+              <Activity size={24} />
               <span>GitHub</span>
             </motion.a>
             <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.linkedin} className="fancy-btn">
-              <Linkedin size={24} />
+              <Activity size={24} />
               <span>LinkedIn</span>
             </motion.a>
             <motion.a whileHover={{ y: -5 }} href={`mailto:${personalInfo.contact.email}`} className="fancy-btn highlight" style={{ background: 'var(--accent-color)', color: '#020617' }}>
@@ -294,13 +290,6 @@ function App() {
       <footer className="py-12 text-center text-slate-500 text-sm">
         <p>© {new Date().getFullYear()} {personalInfo.name} · Bio-AI Engineering Portfolio</p>
       </footer>
-    </div>
-  );
-}
-
-export default App;
-;
-er>
     </div>
   );
 }
