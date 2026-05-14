@@ -4,9 +4,9 @@ export const personalInfo = {
   about: "现任中国科学院杭州医学研究所算法工程师。硕士毕业于荷兰瓦赫宁根大学生物系统工程专业，期间致力于研究计算机视觉在农业领域的创新应用。毕业后从事AI药物研发工作，专注于小分子、蛋白质及核酸适配体的结构预测与生成模型，并具备分子动力学方面的研究经验。目前的研究重点为mRNA肿瘤疫苗设计的算法开发。",
   skills: [
     { name: "Python", level: 95 },
-    { name: "Deep Learning (PyTorch)", level: 90 },
-    { name: "Structural Bioinformatics", level: 85 },
-    { name: "GROMACS / MD", level: 75 },
+    { name: "Deep Learning", level: 95 },
+    { name: "MATLAB", level: 80 },
+    { name: "GROMACS / MD", level: 80 },
     { name: "R / Statistics", level: 80 },
     { name: "Algorithms Development", level: 90 },
   ],
