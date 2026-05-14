@@ -65,7 +65,7 @@ const ProjectAnimation = ({ type }: { type: number }) => {
         {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute flex flex-col gap-1 text-[10px] font-mono text-teal-500/40"
+            className="absolute flex flex-col gap-1 text-[10px] font-mono text-orange-500/40"
             initial={{ y: -100, x: `${i * 8}%` }}
             animate={{ y: window.innerHeight + 100 }}
             transition={{ duration: 10 + Math.random() * 10, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
@@ -76,7 +76,7 @@ const ProjectAnimation = ({ type }: { type: number }) => {
           </motion.div>
         ))}
         <div className="absolute inset-0 flex items-center justify-center">
-            <Dna size={400} strokeWidth={0.5} className="text-teal-500/10 rotate-45" />
+            <Dna size={400} strokeWidth={0.5} className="text-orange-500/10 rotate-45" />
         </div>
       </div>
     );
@@ -89,12 +89,12 @@ const ProjectAnimation = ({ type }: { type: number }) => {
           animate={{ rotate: 360 }}
           transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
         >
-           <Network size={500} strokeWidth={0.2} className="text-teal-400/20" />
+           <Network size={500} strokeWidth={0.2} className="text-orange-400/20" />
         </motion.div>
         {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-32 h-32 border border-teal-400/10 rounded-full"
+            className="absolute w-32 h-32 border border-orange-400/10 rounded-full"
             animate={{
               scale: [1, 1.2, 1],
               opacity: [0.1, 0.3, 0.1],
@@ -118,7 +118,7 @@ const ProjectAnimation = ({ type }: { type: number }) => {
           }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >
-           <Waves size={800} strokeWidth={0.05} className="text-purple-400" />
+           <Waves size={800} strokeWidth={0.05} className="text-orange-400" />
         </motion.div>
     </div>
   );
@@ -252,11 +252,11 @@ function App() {
           whileInView="whileInView"
           variants={fadeInUp}
         >
-          <div className="flex items-center gap-4 mb-8">
-            <Activity className="text-teal-400" size={32} />
+          <div className="card-header">
+            <Activity className="accent-text" size={32} />
             <h2 className="text-4xl font-bold">关于我</h2>
           </div>
-          <p className="text-xl leading-relaxed text-slate-300">
+          <p className="text-xl leading-relaxed text-slate-300 bio-text">
             {personalInfo.about}
           </p>
         </motion.div>
@@ -270,8 +270,8 @@ function App() {
           initial="initial"
           whileInView="whileInView"
         >
-           <div className="flex items-center gap-4 mb-12">
-            <Database className="text-teal-400" size={32} />
+           <div className="card-header">
+            <Database className="accent-text" size={32} />
             <h2 className="text-4xl font-bold">核心能力</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
@@ -279,7 +279,7 @@ function App() {
               <motion.div key={index} variants={fadeInUp}>
                 <div className="skill-info">
                   <span>{skill.name}</span>
-                  <span className="text-teal-400">{skill.level}%</span>
+                  <span className="accent-text">{skill.level}%</span>
                 </div>
                 <div className="progress-bg">
                   <motion.div 
@@ -304,7 +304,7 @@ function App() {
           whileInView="whileInView"
         >
           <h2 className="text-5xl font-bold mb-6">建立联系</h2>
-          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto mb-12">
             致力于利用人工智能技术推动精准医疗与药物开发。
             如果您有合作意向或技术交流，欢迎通过以下方式联络。
           </p>
@@ -317,7 +317,7 @@ function App() {
               <LinkedinIcon size={24} />
               <span>LinkedIn</span>
             </motion.a>
-            <motion.a whileHover={{ y: -5 }} href={`mailto:${personalInfo.contact.email}`} className="fancy-btn highlight" style={{ background: 'var(--accent-color)', color: '#020617' }}>
+            <motion.a whileHover={{ y: -5 }} href={`mailto:${personalInfo.contact.email}`} className="fancy-btn highlight">
               <Mail size={24} />
               <span>Email Me</span>
             </motion.a>
