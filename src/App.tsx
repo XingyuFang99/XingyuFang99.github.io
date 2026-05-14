@@ -163,16 +163,14 @@ function App() {
               </div>
             </div>
             
-            {/* Optimized Floating Icon Positions */}
-            <motion.div className="floating-icon" 
-              style={{ top: '10%', right: '-15%' }}
-              animate={{ y: [0, -15, 0], x: [0, 5, 0] }} 
+            {/* Optimized Floating Icon Positions - Spaced Out */}
+            <motion.div className="floating-icon icon-tl" 
+              animate={{ y: [0, -20, 0], x: [0, -10, 0] }} 
               transition={{ duration: 4, repeat: Infinity }}>
               <Cpu size={28} />
             </motion.div>
-            <motion.div className="floating-icon" 
-              style={{ bottom: '15%', left: '-10%' }}
-              animate={{ y: [0, 15, 0], x: [0, -5, 0] }} 
+            <motion.div className="floating-icon icon-br" 
+              animate={{ y: [0, 20, 0], x: [0, 10, 0] }} 
               transition={{ duration: 5, repeat: Infinity }}>
               <Microscope size={28} />
             </motion.div>
@@ -314,13 +312,6 @@ function App() {
       
       <footer className="py-12 text-center text-slate-500 text-sm">
         <p>© {new Date().getFullYear()} {personalInfo.name} · Bio-AI Engineering Portfolio</p>
-      </footer>
-    </div>
-  );
-}
-
-export default App;
-fo.name} · Bio-AI Engineering Portfolio</p>
       </footer>
     </div>
   );
