@@ -277,8 +277,8 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
             {personalInfo.skills.map((skill, index) => (
               <motion.div key={index} variants={fadeInUp}>
-                <div className="flex justify-between mb-3 font-medium">
-                  <span className="text-lg">{skill.name}</span>
+                <div className="skill-info">
+                  <span>{skill.name}</span>
                   <span className="text-teal-400">{skill.level}%</span>
                 </div>
                 <div className="progress-bg">
