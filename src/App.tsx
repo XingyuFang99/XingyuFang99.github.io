@@ -1,5 +1,5 @@
 import { motion, type Variants } from 'framer-motion';
-import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Atom, Network, Dna, Waves, Beaker } from 'lucide-react';
+import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Network, Dna, Waves, Beaker } from 'lucide-react';
 import { personalInfo } from './config';
 import heroImage from './assets/hero.png';
 import './App.css';
