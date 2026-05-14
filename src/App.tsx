@@ -308,14 +308,13 @@ function App() {
             致力于利用人工智能技术推动精准医疗与药物开发。
             如果您有合作意向或技术交流，欢迎通过以下方式联络。
           </p>
-          
           <div className="contact-btn-group">
             <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.github} className="fancy-btn">
-              <Activity size={24} />
+              <GithubIcon size={24} />
               <span>GitHub</span>
             </motion.a>
             <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.linkedin} className="fancy-btn">
-              <Activity size={24} />
+              <LinkedinIcon size={24} />
               <span>LinkedIn</span>
             </motion.a>
             <motion.a whileHover={{ y: -5 }} href={`mailto:${personalInfo.contact.email}`} className="fancy-btn highlight" style={{ background: 'var(--accent-color)', color: '#020617' }}>
@@ -323,6 +322,7 @@ function App() {
               <span>Email Me</span>
             </motion.a>
           </div>
+
         </motion.div>
       </section>
       
