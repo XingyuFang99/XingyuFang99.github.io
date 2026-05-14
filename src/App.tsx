@@ -1,83 +1,102 @@
-import { motion, type Variants } from 'framer-motion';
-import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope } from 'lucide-react';
+import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
+import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Github, Linkedin, Atom, Network } from 'lucide-react';
 import { personalInfo } from './config';
 import heroImage from './assets/hero.png';
 import './App.css';
 
-// --- Background Components ---
+// --- Immersive DNA Helix Component ---
+const ImmersiveDNA = () => {
+  const points = 40;
+  return (
+    <div className="dna-helix-bg">
+      {[...Array(points)].map((_, i) => {
+        const angle = (i / points) * Math.PI * 4;
+        const x = Math.sin(angle) * 150;
+        const z = Math.cos(angle) * 150;
+        return (
+          <motion.div
+            key={i}
+            className="dna-strand"
+            animate={{
+              y: [-500, 500],
+              x: [x, -x, x],
+              opacity: [0.1, 0.8, 0.1],
+              scale: [0.8, 1.2, 0.8]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              delay: i * 0.1,
+              ease: "linear"
+            }}
+            style={{ 
+              top: '50%',
+              left: '50%',
+              marginLeft: -2,
+              marginTop: -2
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+};
 
-const DNAHelix = () => (
-  <div className="dna-container">
-    {[...Array(20)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="dna-dot"
-        animate={{
-          y: [0, 100, 0],
-          x: [Math.sin(i * 0.5) * 50, Math.sin(i * 0.5 + Math.PI) * 50, Math.sin(i * 0.5) * 50],
-          opacity: [0.2, 0.5, 0.2],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          delay: i * 0.2,
-          ease: "easeInOut"
-        }}
-        style={{ top: `${i * 5}%` }}
-      />
-    ))}
-  </div>
-);
-
-const FloatingParticles = () => (
-  <div className="particles">
-    {[...Array(15)].map((_, i) => (
-      <motion.div
-        key={i}
-        className="particle"
-        initial={{ 
-          x: Math.random() * window.innerWidth, 
-          y: Math.random() * window.innerHeight 
-        }}
-        animate={{
-          x: [null, Math.random() * window.innerWidth],
-          y: [null, Math.random() * window.innerHeight],
-        }}
-        transition={{
-          duration: 20 + Math.random() * 20,
-          repeat: Infinity,
-          ease: "linear"
-        }}
-      />
-    ))}
-  </div>
-);
-
-// --- Icons ---
-
-const GithubIcon = ({ size = 24 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.28 1.15-.28 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-    <path d="M9 18c-4.51 2-5-2-7-2" />
-  </svg>
-);
-
-const LinkedinIcon = ({ size = 24 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect width="4" height="12" x="2" y="9" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
-
-// --- Animations ---
+// --- Specialized Project Background Animation ---
+const ProjectAnimation = ({ type }: { type: number }) => {
+  if (type === 0) { // Molecular / Sequence
+    return (
+      <div className="absolute inset-0 pointer-events-none opacity-20">
+        {[...Array(8)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-20 h-20 border border-teal-500/30 rounded-full"
+            animate={{
+              scale: [1, 1.5, 1],
+              opacity: [0.2, 0.5, 0.2],
+              x: [Math.random() * 100, Math.random() * -100],
+              y: [Math.random() * 100, Math.random() * -100]
+            }}
+            transition={{ duration: 5 + i, repeat: Infinity }}
+            style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
+          />
+        ))}
+      </div>
+    );
+  }
+  if (type === 1) { // 3D Graph / Equivariant
+    return (
+      <div className="absolute inset-0 pointer-events-none opacity-20">
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        >
+           <Network size={400} strokeWidth={0.5} className="text-teal-500" />
+        </motion.div>
+      </div>
+    );
+  }
+  return ( // Vaccine / Full chain
+    <div className="absolute inset-0 pointer-events-none opacity-20">
+       <div className="scan-line" />
+       <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 4, repeat: Infinity }}
+        >
+           <Atom size={500} strokeWidth={0.3} className="text-purple-500" />
+        </motion.div>
+    </div>
+  );
+};
 
 const fadeInUp: Variants = {
-  initial: { opacity: 0, y: 30 },
+  initial: { opacity: 0, y: 50 },
   whileInView: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.8, ease: "easeOut" }
+    transition: { duration: 1, ease: [0.22, 1, 0.36, 1] }
   }
 };
 
@@ -90,164 +109,90 @@ function App() {
   return (
     <div className="container">
       <div className="bg-gradient" />
-      <FloatingParticles />
-      <DNAHelix />
+      <div className="grid-overlay" />
+      <ImmersiveDNA />
       
-      {/* Slide 1: Hero */}
-      <section className="slide hero-section">
+      {/* Hero Section */}
+      <section className="slide">
         <div className="hero-content">
           <motion.div 
             className="hero-text"
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
           >
-            <motion.div 
-              className="badge"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              <Activity size={16} className="pulse" />
-              <span>AI × Bio-Medicine Specialist</span>
-            </motion.div>
+            <div className="fancy-badge">
+              <Activity size={16} />
+              <span>Bio-Computing & Algorithm Engineer</span>
+            </div>
             
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7 }}
-            >
-              {personalInfo.name}
-            </motion.h1>
+            <h1 className="hero-title">{personalInfo.name}</h1>
             
-            <motion.p 
-              className="hero-subtitle"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
-            >
+            <div className="hero-subtitle">
               {personalInfo.role}
-            </motion.p>
+              <p className="mt-4 text-lg text-slate-400 font-normal">
+                浙江省肿瘤医院 / 中国科学院杭州医学研究所
+              </p>
+            </div>
           </motion.div>
 
           <motion.div 
-            className="hero-image-container"
-            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1.2, delay: 0.5 }}
+            className="photo-frame-container"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, delay: 0.3 }}
           >
-            <div className="hex-border">
+            <div className="photo-glow" />
+            <div className="hex-outer">
               <div className="hex-inner">
                 <img src={heroImage} alt={personalInfo.name} className="profile-img" />
               </div>
             </div>
-            {/* Decorative Elements */}
-            <motion.div 
-              className="floating-icon icon-1"
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-            >
-              <Cpu size={24} />
+            
+            <motion.div className="floating-icon icon-1" animate={{ y: [0, -20, 0] }} transition={{ duration: 4, repeat: Infinity }}>
+              <Cpu size={28} />
             </motion.div>
-            <motion.div 
-              className="floating-icon icon-2"
-              animate={{ y: [0, 15, 0] }}
-              transition={{ duration: 4, repeat: Infinity }}
-            >
-              <Microscope size={24} />
+            <motion.div className="floating-icon icon-2" animate={{ y: [0, 20, 0] }} transition={{ duration: 5, repeat: Infinity }}>
+              <Microscope size={28} />
             </motion.div>
           </motion.div>
         </div>
         
         <motion.div 
           className="scroll-indicator"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
+          animate={{ y: [0, 15, 0], opacity: [0.5, 1, 0.5] }}
+          transition={{ repeat: Infinity, duration: 2.5 }}
+          style={{ position: 'absolute', bottom: '3rem' }}
         >
-          <ChevronDown size={32} color="var(--accent-color)" />
+          <ChevronDown size={40} color="var(--accent-color)" />
         </motion.div>
       </section>
 
-      {/* Slide 2: About */}
-      <section className="slide" id="about">
-        <motion.div 
-          className="glass-card bio-card"
-          initial="initial"
-          whileInView="whileInView"
-          variants={fadeInUp}
-          viewport={{ once: true }}
-        >
-          <div className="card-header">
-            <Activity className="accent-text" />
-            <h2 className="accent-text">科研背景</h2>
-          </div>
-          <p className="bio-text">{personalInfo.about}</p>
-        </motion.div>
-      </section>
-
-      {/* Slide 3: Skills */}
-      <section className="slide">
-        <motion.div 
-          className="glass-card"
-          initial="initial"
-          whileInView="whileInView"
-          variants={staggerContainer}
-          viewport={{ once: true }}
-        >
-          <div className="card-header">
-            <Database className="accent-text" />
-            <h2 className="accent-text">技术栈</h2>
-          </div>
-          <div className="skills-grid">
-            {personalInfo.skills.map((skill, index) => (
-              <motion.div 
-                key={index} 
-                className="skill-item"
-                variants={fadeInUp}
-              >
-                <div className="skill-info">
-                  <span>{skill.name}</span>
-                  <span className="skill-percent">{skill.level}%</span>
-                </div>
-                <div className="progress-bg">
-                  <motion.div 
-                    className="progress-fill"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    transition={{ duration: 1.5, delay: 0.2 }}
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Project Slides (One slide per project) */}
+      {/* Scientific Projects - One slide per project with specific animations */}
       {personalInfo.projects.map((project, index) => (
         <section key={index} className="slide" id={`project-${index}`}>
+          <ProjectAnimation type={index} />
+          
           {index === 0 && (
-            <motion.div
-               initial={{ opacity: 0 }}
-               whileInView={{ opacity: 1 }}
-               className="section-title"
-            >
-              <h2 className="accent-text">科研与开发项目</h2>
+            <motion.div className="section-title mb-16" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+              <span className="fancy-badge mx-auto">Selected Research</span>
+              <h2 className="text-5xl font-bold mt-4">科研与开发项目</h2>
               <div className="title-underline"></div>
             </motion.div>
           )}
-          
+
           <motion.div 
             className="modern-project-card"
+            variants={fadeInUp}
             initial="initial"
             whileInView="whileInView"
-            variants={fadeInUp}
-            viewport={{ once: true }}
-            whileHover={{ y: -10 }}
+            viewport={{ once: true, amount: 0.3 }}
           >
-            <div className="project-tag">{project.tags[0]}</div>
+            <div className="project-number">0{index + 1}</div>
+            <span className="project-tag">{project.tags[0]}</span>
             <h3>{project.title}</h3>
-            <p style={{ fontSize: '1.1rem', margin: '1.5rem 0' }}>{project.description}</p>
+            <p className="project-description">{project.description}</p>
+            
             <div className="project-footer">
               <div className="tech-stack">
                 {project.tags.slice(1).map((tag, tIndex) => (
@@ -256,7 +201,7 @@ function App() {
               </div>
               {project.link !== "#" && (
                 <a href={project.link} className="project-link">
-                  <ExternalLink size={24} />
+                  <ExternalLink size={28} />
                 </a>
               )}
             </div>
@@ -264,32 +209,81 @@ function App() {
         </section>
       ))}
 
-      {/* Slide: Contact */}
-      <section className="slide" id="contact">
+      {/* About Section */}
+      <section className="slide" id="about">
         <motion.div 
-          className="glass-card contact-card"
+          className="glass-card"
           initial="initial"
           whileInView="whileInView"
           variants={fadeInUp}
-          viewport={{ once: true }}
         >
-          <h2 className="accent-text">建立联系</h2>
-          <p>如果您对 AI 赋能医疗感兴趣，或有合作意向，欢迎随时联络。</p>
+          <div className="flex items-center gap-4 mb-8">
+            <Activity className="text-teal-400" size={32} />
+            <h2 className="text-4xl font-bold">关于我</h2>
+          </div>
+          <p className="text-xl leading-relaxed text-slate-300">
+            {personalInfo.about}
+          </p>
+        </motion.div>
+      </section>
+
+      {/* Skills Section */}
+      <section className="slide">
+        <motion.div 
+          className="glass-card"
+          variants={staggerContainer}
+          initial="initial"
+          whileInView="whileInView"
+        >
+           <div className="flex items-center gap-4 mb-12">
+            <Database className="text-teal-400" size={32} />
+            <h2 className="text-4xl font-bold">核心能力</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+            {personalInfo.skills.map((skill, index) => (
+              <motion.div key={index} variants={fadeInUp}>
+                <div className="flex justify-between mb-3 font-medium">
+                  <span className="text-lg">{skill.name}</span>
+                  <span className="text-teal-400">{skill.level}%</span>
+                </div>
+                <div className="progress-bg">
+                  <motion.div 
+                    className="progress-fill"
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.level}%` }}
+                    transition={{ duration: 1.5, ease: "easeOut" }}
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="slide" id="contact">
+        <motion.div 
+          className="glass-card text-center"
+          variants={fadeInUp}
+          initial="initial"
+          whileInView="whileInView"
+        >
+          <h2 className="text-5xl font-bold mb-6">建立联系</h2>
+          <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            致力于利用人工智能技术推动精准医疗与药物开发。
+            如果您有合作意向或技术交流，欢迎通过以下方式联络。
+          </p>
           
-          <div className="social-links">
-            {personalInfo.contact.github && (
-              <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.github} className="social-btn">
-                <GithubIcon size={24} />
-                <span>GitHub</span>
-              </motion.a>
-            )}
-            {personalInfo.contact.linkedin && (
-              <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.linkedin} className="social-btn">
-                <LinkedinIcon size={24} />
-                <span>LinkedIn</span>
-              </motion.a>
-            )}
-            <motion.a whileHover={{ y: -5 }} href={`mailto:${personalInfo.contact.email}`} className="social-btn highlight">
+          <div className="contact-btn-group">
+            <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.github} className="fancy-btn">
+              <Github size={24} />
+              <span>GitHub</span>
+            </motion.a>
+            <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.linkedin} className="fancy-btn">
+              <Linkedin size={24} />
+              <span>LinkedIn</span>
+            </motion.a>
+            <motion.a whileHover={{ y: -5 }} href={`mailto:${personalInfo.contact.email}`} className="fancy-btn highlight" style={{ background: 'var(--accent-color)', color: '#020617' }}>
               <Mail size={24} />
               <span>Email Me</span>
             </motion.a>
@@ -297,8 +291,8 @@ function App() {
         </motion.div>
       </section>
       
-      <footer className="footer">
-        <p>© {new Date().getFullYear()} {personalInfo.name} · Built with Bio-AI Aesthetics</p>
+      <footer className="py-12 text-center text-slate-500 text-sm">
+        <p>© {new Date().getFullYear()} {personalInfo.name} · Bio-AI Engineering Portfolio</p>
       </footer>
     </div>
   );
