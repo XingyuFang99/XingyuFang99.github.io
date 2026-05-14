@@ -1,12 +1,12 @@
 :root {
   --bg-color: #020617;
   --card-bg: rgba(15, 23, 42, 0.6);
-  --accent-color: #2dd4bf; 
-  --accent-secondary: #a855f7; 
+  --accent-color: #f97316; /* Vibrant Orange */
+  --accent-secondary: #f43f5e; /* Rose-Orange Gradient pair */
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
-  --border-color: rgba(45, 212, 191, 0.15);
-  --glow-color: rgba(45, 212, 191, 0.4);
+  --border-color: rgba(249, 115, 22, 0.15);
+  --glow-color: rgba(249, 115, 22, 0.4);
 }
 
 * {
