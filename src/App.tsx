@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
-import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Github, Linkedin, Atom, Network } from 'lucide-react';
+import { motion, type Variants } from 'framer-motion';
+import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Atom, Network } from 'lucide-react';
 import { personalInfo } from './config';
 import heroImage from './assets/hero.png';
 import './App.css';
@@ -294,6 +294,13 @@ function App() {
       <footer className="py-12 text-center text-slate-500 text-sm">
         <p>© {new Date().getFullYear()} {personalInfo.name} · Bio-AI Engineering Portfolio</p>
       </footer>
+    </div>
+  );
+}
+
+export default App;
+;
+er>
     </div>
   );
 }
