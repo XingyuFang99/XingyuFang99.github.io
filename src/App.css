@@ -212,7 +212,7 @@ h1.hero-title {
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 24px;
-  padding: 4rem;
+  padding: 5rem 4rem; /* Increased padding */
   max-width: 1100px;
   width: 100%;
 }
@@ -220,8 +220,8 @@ h1.hero-title {
 .card-header {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .accent-text {
@@ -229,8 +229,8 @@ h1.hero-title {
 }
 
 .bio-text {
-  font-size: 1.4rem;
-  line-height: 1.8;
+  font-size: 1.6rem; /* Increased font size */
+  line-height: 2; /* Increased line-height for better spacing */
   color: var(--text-secondary);
 }
 
@@ -250,9 +250,9 @@ h1.hero-title {
 }
 
 .progress-bg {
-  height: 8px;
+  height: 10px; /* Thicker progress bars */
   background: rgba(255,255,255,0.05);
-  border-radius: 4px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
@@ -279,8 +279,8 @@ h1.hero-title {
   background: var(--card-bg);
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
-  border-radius: 24px;
-  padding: 4rem;
+  border-radius: 32px;
+  padding: 5rem 4rem; /* Increased padding */
   max-width: 1100px;
   width: 100%;
   transition: all 0.3s ease;
@@ -293,22 +293,37 @@ h1.hero-title {
 
 .project-tag {
   color: var(--accent-color);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
 }
 
 .tech-tag {
-  font-size: 0.9rem;
-  background: rgba(255,255,255,0.05);
-  padding: 0.3rem 0.8rem;
-  border-radius: 6px;
+  font-size: 0.95rem;
+  background: rgba(255,255,255,0.08);
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  color: var(--accent-color);
+  border: 1px solid rgba(45, 212, 191, 0.2);
+}
+
+.modern-project-card h3 {
+  font-size: 3.5rem; /* Even larger title */
+  font-weight: 700;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.project-description {
+  font-size: 1.5rem; /* Increased font size */
   color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 3rem;
 }
 
 .project-footer {
-  margin-top: 2rem;
+  margin-top: 3rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -316,56 +331,53 @@ h1.hero-title {
 
 .tech-stack {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
-.project-link {
-  color: var(--accent-color);
-  transition: transform 0.3s;
-}
-
-.project-link:hover {
-  transform: scale(1.2);
-}
-
-.modern-project-card h3 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 2rem;
-  line-height: 1.2;
-}
-
-.project-description {
-  font-size: 1.4rem;
-  color: var(--text-secondary);
-  line-height: 1.8;
-  margin-bottom: 3rem;
-}
-
-/* Contact */
-.social-links {
+/* --- Contact Section --- */
+.contact-btn-group {
   display: flex;
-  gap: 1.5rem;
-  margin-top: 2.5rem;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+}
+
+.fancy-btn {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.2rem 2.5rem;
+  background: rgba(15, 23, 42, 0.8);
+  border: 2px solid var(--accent-color); /* Stronger border */
+  border-radius: 16px;
+  color: var(--accent-color); /* Bright color for text */
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 200px;
   justify-content: center;
 }
 
-.social-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.8rem 1.5rem;
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px;
-  color: white;
-  text-decoration: none;
-  transition: all 0.3s;
-}
-
-.social-btn.highlight {
+.fancy-btn:hover {
   background: var(--accent-color);
   color: #020617;
-  font-weight: 700;
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(45, 212, 191, 0.3);
+}
+
+.fancy-btn.highlight {
+  background: var(--accent-color);
+  color: #020617;
+  border-color: var(--accent-color);
+}
+
+.fancy-btn.highlight:hover {
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
 }
 
 /* Utilities */
@@ -375,10 +387,10 @@ h1.hero-title {
 }
 
 .footer {
-  padding: 2rem;
+  padding: 4rem 2rem;
   text-align: center;
   color: var(--text-secondary);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 @media (max-width: 768px) {
@@ -397,5 +409,15 @@ h1.hero-title {
   }
   .hero-subtitle {
     white-space: normal;
+  }
+  .contact-btn-group {
+    flex-direction: column;
+    align-items: center;
+  }
+  .fancy-btn {
+    width: 100%;
+  }
+  .bio-text, .project-description {
+    font-size: 1.2rem;
   }
 }
