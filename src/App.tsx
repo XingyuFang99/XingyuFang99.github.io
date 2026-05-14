@@ -223,52 +223,48 @@ function App() {
         </motion.div>
       </section>
 
-      {/* Slide 4: Projects */}
-      <section className="slide" id="projects">
-        <motion.div
-           initial={{ opacity: 0 }}
-           whileInView={{ opacity: 1 }}
-           className="section-title"
-        >
-          <h2 className="accent-text">科研与开发项目</h2>
-          <div className="title-underline"></div>
-        </motion.div>
-        
-        <motion.div 
-          className="projects-grid"
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true }}
-        >
-          {personalInfo.projects.map((project, index) => (
-            <motion.div 
-              key={index} 
-              className="modern-project-card"
-              variants={fadeInUp}
-              whileHover={{ y: -10 }}
+      {/* Project Slides (One slide per project) */}
+      {personalInfo.projects.map((project, index) => (
+        <section key={index} className="slide" id={`project-${index}`}>
+          {index === 0 && (
+            <motion.div
+               initial={{ opacity: 0 }}
+               whileInView={{ opacity: 1 }}
+               className="section-title"
             >
-              <div className="project-tag">{project.tags[0]}</div>
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
-              <div className="project-footer">
-                <div className="tech-stack">
-                  {project.tags.slice(1).map((tag, tIndex) => (
-                    <span key={tIndex} className="tech-tag">{tag}</span>
-                  ))}
-                </div>
-                {project.link !== "#" && (
-                  <a href={project.link} className="project-link">
-                    <ExternalLink size={18} />
-                  </a>
-                )}
-              </div>
+              <h2 className="accent-text">科研与开发项目</h2>
+              <div className="title-underline"></div>
             </motion.div>
-          ))}
-        </motion.div>
-      </section>
+          )}
+          
+          <motion.div 
+            className="modern-project-card"
+            initial="initial"
+            whileInView="whileInView"
+            variants={fadeInUp}
+            viewport={{ once: true }}
+            whileHover={{ y: -10 }}
+          >
+            <div className="project-tag">{project.tags[0]}</div>
+            <h3>{project.title}</h3>
+            <p style={{ fontSize: '1.1rem', margin: '1.5rem 0' }}>{project.description}</p>
+            <div className="project-footer">
+              <div className="tech-stack">
+                {project.tags.slice(1).map((tag, tIndex) => (
+                  <span key={tIndex} className="tech-tag">{tag}</span>
+                ))}
+              </div>
+              {project.link !== "#" && (
+                <a href={project.link} className="project-link">
+                  <ExternalLink size={24} />
+                </a>
+              )}
+            </div>
+          </motion.div>
+        </section>
+      ))}
 
-      {/* Slide 5: Contact */}
+      {/* Slide: Contact */}
       <section className="slide" id="contact">
         <motion.div 
           className="glass-card contact-card"
