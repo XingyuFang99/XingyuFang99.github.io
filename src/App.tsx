@@ -91,23 +91,18 @@ const ProjectAnimation = ({ type }: { type: number }) => {
       </div>
     );
   }
-  return ( // mRNA / mRNA Delivery / LLM Flow
+  return ( // mRNA / LLM Flow - Simplified to single cohesive animation
     <div className="absolute inset-0 pointer-events-none opacity-30">
        <div className="scan-line" />
        <motion.div 
           className="absolute inset-0 flex items-center justify-center"
           animate={{ 
-            scale: [0.9, 1.1, 0.9],
-            rotate: [0, 5, -5, 0]
+            scale: [0.95, 1.05, 0.95],
+            opacity: [0.2, 0.4, 0.2]
           }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         >
-           <Waves size={600} strokeWidth={0.1} className="text-purple-500/20" />
-        </motion.div>
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center"
-        >
-           <Beaker size={300} strokeWidth={0.5} className="text-teal-500/10" />
+           <Waves size={800} strokeWidth={0.05} className="text-purple-400" />
         </motion.div>
     </div>
   );
@@ -319,6 +314,13 @@ function App() {
       
       <footer className="py-12 text-center text-slate-500 text-sm">
         <p>© {new Date().getFullYear()} {personalInfo.name} · Bio-AI Engineering Portfolio</p>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
+fo.name} · Bio-AI Engineering Portfolio</p>
       </footer>
     </div>
   );
