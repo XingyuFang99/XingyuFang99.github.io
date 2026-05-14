@@ -1,7 +1,58 @@
 import { motion, type Variants } from 'framer-motion';
-import { Mail, ExternalLink, ChevronDown } from 'lucide-react';
+import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope } from 'lucide-react';
 import { personalInfo } from './config';
 import './App.css';
+
+// --- Background Components ---
+
+const DNAHelix = () => (
+  <div className="dna-container">
+    {[...Array(20)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="dna-dot"
+        animate={{
+          y: [0, 100, 0],
+          x: [Math.sin(i * 0.5) * 50, Math.sin(i * 0.5 + Math.PI) * 50, Math.sin(i * 0.5) * 50],
+          opacity: [0.2, 0.5, 0.2],
+        }}
+        transition={{
+          duration: 4,
+          repeat: Infinity,
+          delay: i * 0.2,
+          ease: "easeInOut"
+        }}
+        style={{ top: `${i * 5}%` }}
+      />
+    ))}
+  </div>
+);
+
+const FloatingParticles = () => (
+  <div className="particles">
+    {[...Array(15)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="particle"
+        initial={{ 
+          x: Math.random() * window.innerWidth, 
+          y: Math.random() * window.innerHeight 
+        }}
+        animate={{
+          x: [null, Math.random() * window.innerWidth],
+          y: [null, Math.random() * window.innerHeight],
+        }}
+        transition={{
+          duration: 20 + Math.random() * 20,
+          repeat: Infinity,
+          ease: "linear"
+        }}
+      />
+    ))}
+  </div>
+);
+
+// --- Icons ---
 
 const GithubIcon = ({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -18,8 +69,10 @@ const LinkedinIcon = ({ size = 24 }: { size?: number }) => (
   </svg>
 );
 
+// --- Animations ---
+
 const fadeInUp: Variants = {
-  initial: { opacity: 0, y: 60 },
+  initial: { opacity: 0, y: 30 },
   whileInView: { 
     opacity: 1, 
     y: 0,
@@ -29,68 +82,116 @@ const fadeInUp: Variants = {
 
 const staggerContainer: Variants = {
   initial: {},
-  whileInView: { transition: { staggerChildren: 0.2 } }
+  whileInView: { transition: { staggerChildren: 0.15 } }
 };
 
 function App() {
   return (
     <div className="container">
       <div className="bg-gradient" />
+      <FloatingParticles />
+      <DNAHelix />
       
       {/* Slide 1: Hero */}
-      <section className="slide">
-        <motion.div 
-          className="glass-card"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
-          <motion.p 
-            className="accent-text"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            你好，我是
-          </motion.p>
-          <motion.h1
+      <section className="slide hero-section">
+        <div className="hero-content">
+          <motion.div 
+            className="hero-text"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}
+            transition={{ duration: 1 }}
           >
-            {personalInfo.name}
-          </motion.h1>
-          <motion.h2 
-            className="accent-text"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.1 }}
+            <motion.div 
+              className="badge"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <Activity size={16} className="pulse" />
+              <span>AI × Bio-Medicine Specialist</span>
+            </motion.div>
+            
+            <motion.h1
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7 }}
+            >
+              {personalInfo.name}
+            </motion.h1>
+            
+            <motion.p 
+              className="hero-subtitle"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              {personalInfo.role}
+            </motion.p>
+            
+            <motion.div 
+              className="hero-cta"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.3 }}
+            >
+              <a href="#projects" className="btn-primary">探索项目</a>
+              <a href="#contact" className="btn-secondary">联系我</a>
+            </motion.div>
+          </motion.div>
+
+          <motion.div 
+            className="hero-image-container"
+            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            transition={{ duration: 1.2, delay: 0.5 }}
           >
-            {personalInfo.role}
-          </motion.h2>
-        </motion.div>
+            <div className="hex-border">
+              <div className="hex-inner">
+                {/* 替换成你的照片路径，例如 /assets/my-photo.jpg */}
+                <img src="/assets/hero.png" alt={personalInfo.name} className="profile-img" />
+              </div>
+            </div>
+            {/* Decorative Elements */}
+            <motion.div 
+              className="floating-icon icon-1"
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              <Cpu size={24} />
+            </motion.div>
+            <motion.div 
+              className="floating-icon icon-2"
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 4, repeat: Infinity }}
+            >
+              <Microscope size={24} />
+            </motion.div>
+          </motion.div>
+        </div>
         
         <motion.div 
           className="scroll-indicator"
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}
-          style={{ position: 'absolute', bottom: '2rem' }}
         >
           <ChevronDown size={32} color="var(--accent-color)" />
         </motion.div>
       </section>
 
       {/* Slide 2: About */}
-      <section className="slide">
+      <section className="slide" id="about">
         <motion.div 
-          className="glass-card"
+          className="glass-card bio-card"
           initial="initial"
           whileInView="whileInView"
           variants={fadeInUp}
           viewport={{ once: true }}
         >
-          <h2 className="accent-text">关于我</h2>
-          <p style={{ fontSize: '1.1rem' }}>{personalInfo.about}</p>
+          <div className="card-header">
+            <Activity className="accent-text" />
+            <h2 className="accent-text">科研背景</h2>
+          </div>
+          <p className="bio-text">{personalInfo.about}</p>
         </motion.div>
       </section>
 
@@ -103,24 +204,27 @@ function App() {
           variants={staggerContainer}
           viewport={{ once: true }}
         >
-          <h2 className="accent-text">专业技能</h2>
-          <div style={{ width: '100%' }}>
+          <div className="card-header">
+            <Database className="accent-text" />
+            <h2 className="accent-text">技术栈</h2>
+          </div>
+          <div className="skills-grid">
             {personalInfo.skills.map((skill, index) => (
               <motion.div 
                 key={index} 
-                style={{ marginBottom: '1rem' }}
+                className="skill-item"
                 variants={fadeInUp}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div className="skill-info">
                   <span>{skill.name}</span>
-                  <span className="accent-text">{skill.level}%</span>
+                  <span className="skill-percent">{skill.level}%</span>
                 </div>
-                <div className="skill-bar-container">
+                <div className="progress-bg">
                   <motion.div 
-                    className="skill-bar"
+                    className="progress-fill"
                     initial={{ width: 0 }}
                     whileInView={{ width: `${skill.level}%` }}
-                    transition={{ duration: 1.5, delay: 0.5 }}
+                    transition={{ duration: 1.5, delay: 0.2 }}
                   />
                 </div>
               </motion.div>
@@ -130,19 +234,18 @@ function App() {
       </section>
 
       {/* Slide 4: Projects */}
-      <section className="slide" style={{ height: 'auto', minHeight: '100vh', padding: '5rem 2rem' }}>
-        <motion.h2 
-          className="accent-text"
-          initial="initial"
-          whileInView="whileInView"
-          variants={fadeInUp}
-          viewport={{ once: true }}
-          style={{ marginBottom: '3rem' }}
+      <section className="slide auto-height" id="projects">
+        <motion.div
+           initial={{ opacity: 0 }}
+           whileInView={{ opacity: 1 }}
+           className="section-title"
         >
-          精选项目
-        </motion.h2>
+          <h2 className="accent-text">科研与开发项目</h2>
+          <div className="title-underline"></div>
+        </motion.div>
+        
         <motion.div 
-          className="grid"
+          className="projects-grid"
           variants={staggerContainer}
           initial="initial"
           whileInView="whileInView"
@@ -151,73 +254,66 @@ function App() {
           {personalInfo.projects.map((project, index) => (
             <motion.div 
               key={index} 
-              className="project-card"
+              className="modern-project-card"
               variants={fadeInUp}
-              whileHover={{ y: -10, borderColor: 'var(--accent-color)' }}
+              whileHover={{ y: -10 }}
             >
+              <div className="project-tag">{project.tags[0]}</div>
               <h3>{project.title}</h3>
-              <p style={{ margin: '1rem 0', opacity: 0.8, fontSize: '0.95rem' }}>{project.description}</p>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-                {project.tags.map((tag, tIndex) => (
-                  <span key={tIndex} style={{ fontSize: '0.75rem', padding: '0.2rem 0.6rem', background: 'rgba(255,255,255,0.1)', borderRadius: '10px' }}>
-                    {tag}
-                  </span>
-                ))}
+              <p>{project.description}</p>
+              <div className="project-footer">
+                <div className="tech-stack">
+                  {project.tags.slice(1).map((tag, tIndex) => (
+                    <span key={tIndex} className="tech-tag">{tag}</span>
+                  ))}
+                </div>
+                {project.link !== "#" && (
+                  <a href={project.link} className="project-link">
+                    <ExternalLink size={18} />
+                  </a>
+                )}
               </div>
-              {project.link !== "#" && (
-                <a href={project.link} className="accent-text" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  查看项目 <ExternalLink size={16} />
-                </a>
-              )}
             </motion.div>
           ))}
         </motion.div>
       </section>
 
       {/* Slide 5: Contact */}
-      <section className="slide">
+      <section className="slide" id="contact">
         <motion.div 
-          className="glass-card"
-          style={{ textAlign: 'center' }}
+          className="glass-card contact-card"
           initial="initial"
           whileInView="whileInView"
           variants={fadeInUp}
           viewport={{ once: true }}
         >
-          <h2 className="accent-text">联系我</h2>
-          <p style={{ marginBottom: '2rem' }}>如果您对我的研究感兴趣或想进一步交流，欢迎随时联系。</p>
-          <div className="contact-links">
+          <h2 className="accent-text">建立联系</h2>
+          <p>如果您对 AI 赋能医疗感兴趣，或有合作意向，欢迎随时联络。</p>
+          
+          <div className="social-links">
             {personalInfo.contact.github && (
-              <motion.a 
-                whileHover={{ scale: 1.05, color: 'var(--accent-color)' }} 
-                href={personalInfo.contact.github} 
-                className="contact-link-item"
-              >
+              <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.github} className="social-btn">
                 <GithubIcon size={24} />
                 <span>GitHub</span>
               </motion.a>
             )}
             {personalInfo.contact.linkedin && (
-              <motion.a 
-                whileHover={{ scale: 1.05, color: 'var(--accent-color)' }} 
-                href={personalInfo.contact.linkedin} 
-                className="contact-link-item"
-              >
+              <motion.a whileHover={{ y: -5 }} href={personalInfo.contact.linkedin} className="social-btn">
                 <LinkedinIcon size={24} />
                 <span>LinkedIn</span>
               </motion.a>
             )}
-            <motion.a 
-              whileHover={{ scale: 1.05, color: 'var(--accent-color)' }} 
-              href={`mailto:${personalInfo.contact.email}`} 
-              className="contact-link-item"
-            >
+            <motion.a whileHover={{ y: -5 }} href={`mailto:${personalInfo.contact.email}`} className="social-btn highlight">
               <Mail size={24} />
-              <span>Email</span>
+              <span>Email Me</span>
             </motion.a>
           </div>
         </motion.div>
       </section>
+      
+      <footer className="footer">
+        <p>© {new Date().getFullYear()} {personalInfo.name} · Built with Bio-AI Aesthetics</p>
+      </footer>
     </div>
   );
 }
