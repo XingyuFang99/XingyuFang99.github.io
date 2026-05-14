@@ -147,8 +147,7 @@ function App() {
           >
             <div className="hex-border">
               <div className="hex-inner">
-                {/* 替换成你的照片路径，例如 /assets/my-photo.jpg */}
-                <img src="/assets/hero.png" alt={personalInfo.name} className="profile-img" />
+                <img src={heroImage} alt={personalInfo.name} className="profile-img" />
               </div>
             </div>
             {/* Decorative Elements */}
@@ -313,6 +312,13 @@ function App() {
       
       <footer className="footer">
         <p>© {new Date().getFullYear()} {personalInfo.name} · Built with Bio-AI Aesthetics</p>
+      </footer>
+    </div>
+  );
+}
+
+export default App;
+ate().getFullYear()} {personalInfo.name} · Built with Bio-AI Aesthetics</p>
       </footer>
     </div>
   );

@@ -70,18 +70,16 @@ body {
   width: 100%;
   height: 100vh;
   overflow-y: auto;
-  scroll-snap-type: y mandatory;
 }
 
 .slide {
   min-height: 100vh;
   width: 100%;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 6rem 2rem; /* Added padding to ensure content isn't too tight */
+  padding: 8rem 2rem;
   position: relative;
 }
 
