@@ -234,7 +234,7 @@ function App() {
       </section>
 
       {/* Slide 4: Projects */}
-      <section className="slide auto-height" id="projects">
+      <section className="slide" id="projects">
         <motion.div
            initial={{ opacity: 0 }}
            whileInView={{ opacity: 1 }}

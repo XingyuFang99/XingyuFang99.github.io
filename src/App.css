@@ -81,13 +81,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem; /* Added padding to ensure content isn't too tight */
   position: relative;
-}
-
-.auto-height {
-  height: auto;
-  scroll-snap-align: none;
 }
 
 /* Hero Section */
