@@ -212,8 +212,8 @@ h1.hero-title {
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 24px;
-  padding: 3rem;
-  max-width: 900px;
+  padding: 4rem;
+  max-width: 1100px;
   width: 100%;
 }
 
@@ -229,7 +229,7 @@ h1.hero-title {
 }
 
 .bio-text {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   line-height: 1.8;
   color: var(--text-secondary);
 }
@@ -238,20 +238,21 @@ h1.hero-title {
 .skills-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 .skill-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.8rem;
   font-weight: 500;
+  font-size: 1.2rem;
 }
 
 .progress-bg {
-  height: 6px;
+  height: 8px;
   background: rgba(255,255,255,0.05);
-  border-radius: 3px;
+  border-radius: 4px;
   overflow: hidden;
 }
 
@@ -279,8 +280,8 @@ h1.hero-title {
   backdrop-filter: blur(12px);
   border: 1px solid var(--border-color);
   border-radius: 24px;
-  padding: 3rem;
-  max-width: 800px;
+  padding: 4rem;
+  max-width: 1100px;
   width: 100%;
   transition: all 0.3s ease;
 }
@@ -292,16 +293,16 @@ h1.hero-title {
 
 .project-tag {
   color: var(--accent-color);
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .tech-tag {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   background: rgba(255,255,255,0.05);
-  padding: 0.2rem 0.6rem;
+  padding: 0.3rem 0.8rem;
   border-radius: 6px;
   color: var(--text-secondary);
 }
@@ -325,6 +326,20 @@ h1.hero-title {
 
 .project-link:hover {
   transform: scale(1.2);
+}
+
+.modern-project-card h3 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  line-height: 1.2;
+}
+
+.project-description {
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: 3rem;
 }
 
 /* Contact */
