@@ -1,5 +1,5 @@
 import { motion, type Variants } from 'framer-motion';
-import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Atom, Network } from 'lucide-react';
+import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Atom, Network, Dna, Waves, Beaker } from 'lucide-react';
 import { personalInfo } from './config';
 import heroImage from './assets/hero.png';
 import './App.css';
@@ -41,50 +41,73 @@ const ImmersiveDNA = () => {
   );
 };
 
-// --- Specialized Project Background Animation ---
+// --- Specialized Biological Background Animations ---
 const ProjectAnimation = ({ type }: { type: number }) => {
-  if (type === 0) { // Molecular / Sequence
+  if (type === 0) { // SELEX / Sequence Flow
     return (
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        {[...Array(8)].map((_, i) => (
+      <div className="absolute inset-0 pointer-events-none opacity-30">
+        {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-20 h-20 border border-teal-500/30 rounded-full"
+            className="absolute flex flex-col gap-1 text-[10px] font-mono text-teal-500/40"
+            initial={{ y: -100, x: `${i * 8}%` }}
+            animate={{ y: window.innerHeight + 100 }}
+            transition={{ duration: 10 + Math.random() * 10, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
+          >
+            {"ATGC".split('').sort(() => Math.random() - 0.5).map((char, j) => (
+              <span key={j}>{char}</span>
+            ))}
+          </motion.div>
+        ))}
+        <div className="absolute inset-0 flex items-center justify-center">
+            <Dna size={400} strokeWidth={0.5} className="text-teal-500/10 rotate-45" />
+        </div>
+      </div>
+    );
+  }
+  if (type === 1) { // Protein / Graph Folding
+    return (
+      <div className="absolute inset-0 pointer-events-none opacity-30">
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+          animate={{ rotate: 360 }}
+          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+        >
+           <Network size={500} strokeWidth={0.2} className="text-teal-400/20" />
+        </motion.div>
+        {[...Array(6)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-32 h-32 border border-teal-400/10 rounded-full"
             animate={{
-              scale: [1, 1.5, 1],
-              opacity: [0.2, 0.5, 0.2],
-              x: [Math.random() * 100, Math.random() * -100],
-              y: [Math.random() * 100, Math.random() * -100]
+              scale: [1, 1.2, 1],
+              opacity: [0.1, 0.3, 0.1],
+              rotate: [0, 180, 360]
             }}
-            transition={{ duration: 5 + i, repeat: Infinity }}
-            style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
+            transition={{ duration: 8 + i, repeat: Infinity }}
+            style={{ left: `${15 + i * 12}%`, top: `${20 + (i % 3) * 20}%` }}
           />
         ))}
       </div>
     );
   }
-  if (type === 1) { // 3D Graph / Equivariant
-    return (
-      <div className="absolute inset-0 pointer-events-none opacity-20">
-        <motion.div 
-          className="absolute inset-0 flex items-center justify-center"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-        >
-           <Network size={400} strokeWidth={0.5} className="text-teal-500" />
-        </motion.div>
-      </div>
-    );
-  }
-  return ( // Vaccine / Full chain
-    <div className="absolute inset-0 pointer-events-none opacity-20">
+  return ( // mRNA / mRNA Delivery / LLM Flow
+    <div className="absolute inset-0 pointer-events-none opacity-30">
        <div className="scan-line" />
        <motion.div 
           className="absolute inset-0 flex items-center justify-center"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 4, repeat: Infinity }}
+          animate={{ 
+            scale: [0.9, 1.1, 0.9],
+            rotate: [0, 5, -5, 0]
+          }}
+          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         >
-           <Atom size={500} strokeWidth={0.3} className="text-purple-500" />
+           <Waves size={600} strokeWidth={0.1} className="text-purple-500/20" />
+        </motion.div>
+        <motion.div 
+          className="absolute inset-0 flex items-center justify-center"
+        >
+           <Beaker size={300} strokeWidth={0.5} className="text-teal-500/10" />
         </motion.div>
     </div>
   );
@@ -145,10 +168,17 @@ function App() {
               </div>
             </div>
             
-            <motion.div className="floating-icon icon-1" animate={{ y: [0, -20, 0] }} transition={{ duration: 4, repeat: Infinity }}>
+            {/* Optimized Floating Icon Positions */}
+            <motion.div className="floating-icon" 
+              style={{ top: '10%', right: '-15%' }}
+              animate={{ y: [0, -15, 0], x: [0, 5, 0] }} 
+              transition={{ duration: 4, repeat: Infinity }}>
               <Cpu size={28} />
             </motion.div>
-            <motion.div className="floating-icon icon-2" animate={{ y: [0, 20, 0] }} transition={{ duration: 5, repeat: Infinity }}>
+            <motion.div className="floating-icon" 
+              style={{ bottom: '15%', left: '-10%' }}
+              animate={{ y: [0, 15, 0], x: [0, -5, 0] }} 
+              transition={{ duration: 5, repeat: Infinity }}>
               <Microscope size={28} />
             </motion.div>
           </motion.div>
@@ -164,7 +194,7 @@ function App() {
         </motion.div>
       </section>
 
-      {/* Scientific Projects - One slide per project with specific animations */}
+      {/* Scientific Projects - One slide per project with bio-themed animations */}
       {personalInfo.projects.map((project, index) => (
         <section key={index} className="slide" id={`project-${index}`}>
           <ProjectAnimation type={index} />
@@ -223,7 +253,7 @@ function App() {
         </motion.div>
       </section>
 
-      {/* Skills Section */}
+      {/* Skills Section with Progress Bar Animations */}
       <section className="slide">
         <motion.div 
           className="glass-card"

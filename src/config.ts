@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: "方星雨",
-  role: "算法工程师 / 浙江省肿瘤医院",
+  role: "算法工程师 / 中国科学院杭州医学研究所",
   about: "现任中国科学院杭州医学研究所算法工程师。硕士毕业于荷兰瓦赫宁根大学生物系统工程专业，期间致力于研究计算机视觉在农业领域的创新应用。毕业后从事AI药物研发工作，专注于小分子、蛋白质及核酸适配体的结构预测与生成模型，并具备分子动力学方面的研究经验。目前的研究重点为mRNA肿瘤疫苗设计的算法开发。",
   skills: [
     { name: "Python", level: 95 },
@@ -26,7 +26,7 @@ export const personalInfo = {
     {
       title: "AI驱动的多价肿瘤mRNA疫苗全链协同优化系统",
       description: "面向新一代肿瘤疫苗开发，构建了涵盖5'UTR、3'UTR设计及CDS区优化的全链条协同设计平台，实现了mRNA功能预测与结构的精准调控。",
-      tags: ["Cancer Vaccine", "mRNA Design", "Sequence Optimization", "Multi-valent Vaccine"],
+      tags: ["Cancer Vaccine", "mRNA Design", "LLM", "MCTS", "AI Agents"],
       link: "#"
     }
   ],
