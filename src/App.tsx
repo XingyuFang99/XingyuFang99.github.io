@@ -1,8 +1,34 @@
+import { useEffect, useMemo, useState } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Network, Dna, Waves } from 'lucide-react';
+import { Mail, ExternalLink, ChevronDown, Activity, Cpu, Database, Microscope, Network, Dna, Waves, Play, RotateCcw, X } from 'lucide-react';
 import { personalInfo } from './config';
 import heroImage from './assets/hero.png';
 import './App.css';
+
+const catAssets = import.meta.glob('./assets/cat.*', {
+  eager: true,
+  query: '?url',
+  import: 'default'
+});
+const catPhoto = (
+  Object.entries(catAssets).find(([path]) => path.endsWith(`/${personalInfo.cat.photo}`))?.[1]
+  ?? Object.values(catAssets)[0]
+) as string | undefined;
+const bases = ['A', 'U', 'G', 'C'] as const;
+const sequenceLetters = ['A', 'T', 'G', 'C'];
+const sequenceColumns = Array.from({ length: 12 }, (_, i) => ({
+  x: `${i * 8}%`,
+  duration: 10 + (i % 5) * 1.8,
+  chars: sequenceLetters.map((_, j) => sequenceLetters[(i + j) % sequenceLetters.length])
+}));
+type Base = typeof bases[number];
+type FallingBase = {
+  id: number;
+  value: Base;
+  x: number;
+  duration: number;
+  delay: number;
+};
 
 // --- Icons ---
 const GithubIcon = ({ size = 24 }: { size?: number }) => (
@@ -62,15 +88,15 @@ const ProjectAnimation = ({ type }: { type: number }) => {
   if (type === 0) { // SELEX / Sequence Flow
     return (
       <div className="absolute inset-0 pointer-events-none opacity-30">
-        {[...Array(12)].map((_, i) => (
+        {sequenceColumns.map((column, i) => (
           <motion.div
             key={i}
             className="absolute flex flex-col gap-1 text-[10px] font-mono text-orange-500/40"
-            initial={{ y: -100, x: `${i * 8}%` }}
-            animate={{ y: window.innerHeight + 100 }}
-            transition={{ duration: 10 + Math.random() * 10, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
+            initial={{ y: "-100px", x: column.x }}
+            animate={{ y: "calc(100vh + 100px)" }}
+            transition={{ duration: column.duration, repeat: Infinity, ease: "linear", delay: i * 0.5 }}
           >
-            {"ATGC".split('').sort(() => Math.random() - 0.5).map((char, j) => (
+            {column.chars.map((char, j) => (
               <span key={j}>{char}</span>
             ))}
           </motion.div>
@@ -138,6 +164,175 @@ const staggerContainer: Variants = {
   whileInView: { transition: { staggerChildren: 0.15 } }
 };
 
+const randomBase = () => bases[Math.floor(Math.random() * bases.length)];
+
+const CatPhoto = ({ className }: { className?: string }) => {
+  if (catPhoto) {
+    return (
+      <img
+        src={catPhoto}
+        alt={`${personalInfo.cat.name}的照片`}
+        className={className}
+      />
+    );
+  }
+
+  return (
+    <div className={`cat-photo-placeholder ${className ?? ''}`} aria-label={`${personalInfo.cat.name}的照片占位`}>
+      <span>{personalInfo.cat.name.slice(0, 1)}</span>
+    </div>
+  );
+};
+
+const CatBaseGame = () => {
+  const [isRunning, setIsRunning] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30);
+  const [score, setScore] = useState(0);
+  const [targetBase, setTargetBase] = useState<Base>('A');
+  const [fallingBases, setFallingBases] = useState<FallingBase[]>([]);
+
+  const statusText = useMemo(() => {
+    if (isRunning) return `目标碱基：${targetBase}`;
+    if (timeLeft === 0) return score >= 80 ? `${personalInfo.cat.name}批准了这组序列。` : `${personalInfo.cat.name}建议再跑一轮。`;
+    return "点击开始，帮猫猫抓住目标碱基。";
+  }, [isRunning, score, targetBase, timeLeft]);
+
+  const startGame = () => {
+    setScore(0);
+    setTimeLeft(30);
+    setTargetBase(randomBase());
+    setFallingBases([]);
+    setIsRunning(true);
+  };
+
+  const handleBaseClick = (base: FallingBase) => {
+    if (!isRunning) return;
+    setScore((current) => Math.max(0, current + (base.value === targetBase ? 10 : -3)));
+    setFallingBases((current) => current.filter((item) => item.id !== base.id));
+    if (base.value === targetBase) {
+      setTargetBase(randomBase());
+    }
+  };
+
+  useEffect(() => {
+    if (!isRunning) return;
+
+    const timer = window.setInterval(() => {
+      setTimeLeft((current) => {
+        if (current <= 1) {
+          setIsRunning(false);
+          return 0;
+        }
+        return current - 1;
+      });
+    }, 1000);
+
+    return () => window.clearInterval(timer);
+  }, [isRunning]);
+
+  useEffect(() => {
+    if (!isRunning) return;
+
+    const spawner = window.setInterval(() => {
+      const id = Date.now() + Math.random();
+      setFallingBases((current) => [
+        ...current.slice(-12),
+        {
+          id,
+          value: randomBase(),
+          x: 8 + Math.random() * 84,
+          duration: 3.8 + Math.random() * 1.7,
+          delay: Math.random() * 0.2
+        }
+      ]);
+    }, 620);
+
+    return () => window.clearInterval(spawner);
+  }, [isRunning]);
+
+  return (
+    <div className="cat-game" aria-label="帮猫猫抓碱基小游戏">
+      <div className="cat-game-stats">
+        <span>分数 {score}</span>
+        <span>{timeLeft}s</span>
+      </div>
+      <div className="cat-game-arena">
+        {fallingBases.map((base) => (
+          <button
+            key={base.id}
+            type="button"
+            className={`falling-base ${base.value === targetBase ? 'is-target' : ''}`}
+            style={{
+              left: `${base.x}%`,
+              animationDuration: `${base.duration}s`,
+              animationDelay: `${base.delay}s`
+            }}
+            onClick={() => handleBaseClick(base)}
+            aria-label={`抓住碱基 ${base.value}`}
+          >
+            {base.value}
+          </button>
+        ))}
+        {!isRunning && (
+          <div className="cat-game-idle">
+            <p>{statusText}</p>
+            <button type="button" className="cat-game-start" onClick={startGame}>
+              {timeLeft === 0 ? <RotateCcw size={18} /> : <Play size={18} />}
+              <span>{timeLeft === 0 ? "再来一轮" : "开始游戏"}</span>
+            </button>
+          </div>
+        )}
+      </div>
+      {isRunning && <p className="cat-game-hint">{statusText}</p>}
+    </div>
+  );
+};
+
+const CatCompanion = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="cat-companion">
+      <motion.button
+        type="button"
+        className="cat-orb"
+        aria-label={isOpen ? "关闭猫猫实验室助手" : "打开猫猫实验室助手"}
+        onClick={() => setIsOpen((current) => !current)}
+        whileHover={{ y: -4, scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
+      >
+        <CatPhoto className="cat-orb-photo" />
+        <span className="cat-orb-ping" />
+      </motion.button>
+      {!isOpen && <span className="cat-click-hint">点我</span>}
+
+      {isOpen && (
+        <motion.aside
+          className="cat-panel"
+          initial={{ opacity: 0, y: 20, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.96 }}
+        >
+          <div className="cat-panel-header">
+            <div>
+              <span className="cat-panel-kicker">Lab Companion</span>
+              <h3>猫猫实验室助手</h3>
+            </div>
+            <button type="button" className="cat-close-btn" aria-label="关闭猫猫实验室助手" onClick={() => setIsOpen(false)}>
+              <X size={18} />
+            </button>
+          </div>
+          <div className="cat-panel-intro">
+            <CatPhoto className="cat-panel-photo" />
+            <p>{personalInfo.cat.caption}</p>
+          </div>
+          <CatBaseGame />
+        </motion.aside>
+      )}
+    </div>
+  );
+};
+
 function App() {
   return (
     <div className="container">
@@ -190,6 +385,7 @@ function App() {
               transition={{ duration: 5, repeat: Infinity }}>
               <Microscope size={28} />
             </motion.div>
+            <CatCompanion />
           </motion.div>
         </div>
         
@@ -259,6 +455,13 @@ function App() {
           <p className="text-xl leading-relaxed text-slate-300 bio-text">
             {personalInfo.about}
           </p>
+          <motion.div className="cat-life-card" whileHover={{ y: -4 }}>
+            <CatPhoto className="cat-life-photo" />
+            <div>
+              <span>Life Signal</span>
+              <p>{personalInfo.cat.caption}</p>
+            </div>
+          </motion.div>
         </motion.div>
       </section>
 
